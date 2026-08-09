@@ -2,17 +2,17 @@ package io.github.miuzarte.scrcpyforandroid.scaffolds
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import top.yukonga.miuix.kmp.basic.SpinnerDefaults
-import top.yukonga.miuix.kmp.basic.SpinnerEntry
-import top.yukonga.miuix.kmp.basic.SpinnerItemImpl
+import top.yukonga.miuix.kmp.basic.DropdownDefaults
+import top.yukonga.miuix.kmp.basic.DropdownImpl
+import top.yukonga.miuix.kmp.basic.DropdownItem
 import top.yukonga.miuix.kmp.preference.WindowSpinnerPreference
 
 /**
- * miuix Spinner 系列（WindowSpinnerPreference/SpinnerEntry/SpinnerItemImpl/SpinnerDefaults）
+ * miuix Spinner 系列（WindowSpinnerPreference/DropdownItem/DropdownImpl/DropdownDefaults）
  * 的兼容封装层。
  *
- * miuix 0.9.1 起 Spinner 系列已废弃并迁移至 Dropdown 系列，
- * 后续升级 miuix 时只需修改本文件内部实现，无需改动业务调用方。
+ * miuix 0.9.1 起 Spinner 系列（SpinnerEntry/SpinnerItemImpl/SpinnerDefaults）已废弃并迁移至
+ * Dropdown 系列，后续升级 miuix 时只需修改本文件内部实现，无需改动业务调用方。
  */
 data class MiuixSpinnerOption(
     val icon: (@Composable (Modifier) -> Unit)? = null,
@@ -32,7 +32,7 @@ fun MiuixSpinnerPreference(
 ) {
     WindowSpinnerPreference(
         title = title,
-        items = options.map { SpinnerEntry(icon = it.icon, title = it.title, summary = it.summary) },
+        items = options.map { DropdownItem(text = it.title.orEmpty(), icon = it.icon, summary = it.summary) },
         selectedIndex = selectedIndex,
         modifier = modifier,
         summary = summary,
@@ -50,12 +50,12 @@ fun MiuixSpinnerItem(
     dialogMode: Boolean = false,
     onSelectedIndexChange: (Int) -> Unit,
 ) {
-    SpinnerItemImpl(
-        entry = SpinnerEntry(icon = option.icon, title = option.title, summary = option.summary),
-        entryCount = entryCount,
+    DropdownImpl(
+        item = DropdownItem(text = option.title.orEmpty(), icon = option.icon, summary = option.summary),
+        optionSize = entryCount,
         isSelected = isSelected,
         index = index,
-        spinnerColors = SpinnerDefaults.spinnerColors(),
+        dropdownColors = DropdownDefaults.dropdownColors(),
         dialogMode = dialogMode,
         onSelectedIndexChange = onSelectedIndexChange,
     )
