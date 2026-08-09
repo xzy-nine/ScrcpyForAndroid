@@ -20,18 +20,18 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import io.github.miuzarte.scrcpyforandroid.constants.UiSpacing
 import io.github.miuzarte.scrcpyforandroid.scaffolds.AppPageLazyColumn
+import io.github.miuzarte.scrcpyforandroid.scaffolds.MiuixSpinnerOption
+import io.github.miuzarte.scrcpyforandroid.scaffolds.MiuixSpinnerPreference
 import io.github.miuzarte.scrcpyforandroid.scaffolds.SuperSlide
 import notifyrelay.data.config.ScrcpyPresets
 import kotlinx.coroutines.launch
 import top.yukonga.miuix.kmp.basic.Card
-import top.yukonga.miuix.kmp.basic.SpinnerEntry
 import top.yukonga.miuix.kmp.basic.SnackbarHostState
 import top.yukonga.miuix.kmp.basic.Text
 import top.yukonga.miuix.kmp.basic.TextField
 import top.yukonga.miuix.kmp.preference.ArrowPreference
 import top.yukonga.miuix.kmp.preference.SwitchPreference
 import top.yukonga.miuix.kmp.preference.WindowDropdownPreference
-import top.yukonga.miuix.kmp.preference.WindowSpinnerPreference
 import kotlin.math.roundToInt
 
 private val AUDIO_SOURCE_OPTIONS = listOf(
@@ -104,10 +104,10 @@ fun AdvancedConfigPage(
     }
     val videoEncoderEntries = videoEncoderDropdownItems.map { encoderName ->
         if (encoderName == "默认") {
-            SpinnerEntry(title = encoderName)
+            MiuixSpinnerOption(title = encoderName)
         } else {
             val type = resolveEncoderTypeLabel(viewModel.videoEncoderTypeMap[encoderName])
-            SpinnerEntry(
+            MiuixSpinnerOption(
                 title = encoderName,
                 summary = type.ifBlank { null },
             )
@@ -115,10 +115,10 @@ fun AdvancedConfigPage(
     }
     val audioEncoderEntries = audioEncoderDropdownItems.map { encoderName ->
         if (encoderName == "默认") {
-            SpinnerEntry(title = encoderName)
+            MiuixSpinnerOption(title = encoderName)
         } else {
             val type = resolveEncoderTypeLabel(viewModel.audioEncoderTypeMap[encoderName])
-            SpinnerEntry(
+            MiuixSpinnerOption(
                 title = encoderName,
                 summary = type.ifBlank { null },
             )
@@ -409,10 +409,10 @@ fun AdvancedConfigPage(
                     onClick = { onRefreshEncoders?.invoke() },
                     enabled = !sessionStarted,
                 )
-                WindowSpinnerPreference(
+                MiuixSpinnerPreference(
                     title = "视频编码器",
                     summary = "--video-encoder",
-                    items = videoEncoderEntries,
+                    options = videoEncoderEntries,
                     selectedIndex = videoEncoderIndex,
                     onSelectedIndexChange = { index ->
                         viewModel.videoEncoder = if (index == 0) "" else videoEncoderDropdownItems[index]
@@ -429,10 +429,10 @@ fun AdvancedConfigPage(
                         .padding(horizontal = UiSpacing.CardContent)
                         .padding(bottom = UiSpacing.CardContent),
                 )
-                WindowSpinnerPreference(
+                MiuixSpinnerPreference(
                     title = "音频编码器",
                     summary = "--audio-encoder",
-                    items = audioEncoderEntries,
+                    options = audioEncoderEntries,
                     selectedIndex = audioEncoderIndex,
                     onSelectedIndexChange = { index ->
                         viewModel.audioEncoder = if (index == 0) "" else audioEncoderDropdownItems[index]

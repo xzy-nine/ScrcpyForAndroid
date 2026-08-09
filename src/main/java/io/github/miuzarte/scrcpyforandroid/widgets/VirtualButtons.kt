@@ -35,6 +35,8 @@ import androidx.compose.ui.unit.dp
 import io.github.miuzarte.scrcpyforandroid.constants.UiAndroidKeycodes
 import io.github.miuzarte.scrcpyforandroid.constants.UiSpacing
 import io.github.miuzarte.scrcpyforandroid.haptics.rememberAppHaptics
+import io.github.miuzarte.scrcpyforandroid.scaffolds.MiuixSpinnerItem
+import io.github.miuzarte.scrcpyforandroid.scaffolds.MiuixSpinnerOption
 import notifyrelay.data.config.ScrcpyDefaults
 import top.yukonga.miuix.kmp.basic.Button
 import top.yukonga.miuix.kmp.basic.ButtonDefaults
@@ -42,9 +44,6 @@ import top.yukonga.miuix.kmp.basic.Icon
 import top.yukonga.miuix.kmp.basic.ListPopupColumn
 import top.yukonga.miuix.kmp.basic.ListPopupDefaults
 import top.yukonga.miuix.kmp.basic.PopupPositionProvider
-import top.yukonga.miuix.kmp.basic.SpinnerDefaults
-import top.yukonga.miuix.kmp.basic.SpinnerEntry
-import top.yukonga.miuix.kmp.basic.SpinnerItemImpl
 import top.yukonga.miuix.kmp.basic.Text
 import top.yukonga.miuix.kmp.overlay.OverlayListPopup
 import top.yukonga.miuix.kmp.theme.MiuixTheme
@@ -312,7 +311,7 @@ class VirtualButtonBar(
         val haptics = rememberAppHaptics()
         val spinnerItems = remember(moreActions) {
             moreActions.map { action ->
-                SpinnerEntry(
+                MiuixSpinnerOption(
                     icon = {
                         Icon(
                             action.icon,
@@ -335,14 +334,12 @@ class VirtualButtonBar(
             enableWindowDim = false,
         ) {
             ListPopupColumn {
-                spinnerItems.forEachIndexed { index, entry ->
-                    SpinnerItemImpl(
-                        entry = entry,
+                spinnerItems.forEachIndexed { index, option ->
+                    MiuixSpinnerItem(
+                        option = option,
                         entryCount = spinnerItems.size,
                         isSelected = false,
                         index = index,
-                        spinnerColors = SpinnerDefaults.spinnerColors(),
-                        dialogMode = false,
                         onSelectedIndexChange = { selectedIdx ->
                             haptics.confirm()
                             onAction(moreActions[selectedIdx])
