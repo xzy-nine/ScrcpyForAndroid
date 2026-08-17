@@ -797,7 +797,7 @@ class Scrcpy(
             var audioInput: DataInputStream? = null
             var controlStream: AdbSocketStream? = null
             var controlWriter: ControlWriter? = null
-            var newSession: Scrcpy.Session.ActiveSession?
+            var newSession: ActiveSession?
 
             try {
                 serverStream = NativeAdbService.openShellStream(serverCommand)
