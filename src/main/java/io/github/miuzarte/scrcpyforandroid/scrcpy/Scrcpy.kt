@@ -790,14 +790,14 @@ class Scrcpy(
 
             var serverStream: AdbSocketStream? = null
             var serverLogThread: Thread? = null
-            var firstStream: AdbSocketStream? = null
+            var firstStream: AdbSocketStream?
             var videoStream: AdbSocketStream? = null
             var videoInput: DataInputStream? = null
             var audioStream: AdbSocketStream? = null
             var audioInput: DataInputStream? = null
             var controlStream: AdbSocketStream? = null
             var controlWriter: ControlWriter? = null
-            var newSession: ActiveSession? = null
+            var newSession: Scrcpy.Session.ActiveSession?
 
             try {
                 serverStream = NativeAdbService.openShellStream(serverCommand)

@@ -4,7 +4,6 @@ import android.content.Context
 import android.os.Build
 import android.util.Base64
 import android.util.Log
-import io.github.miuzarte.scrcpyforandroid.nativecore.DirectAdbTransport.init
 import kotlinx.coroutines.runBlocking
 import notifyrelay.data.config.ScrcpyPreferenceKeys
 import java.io.BufferedInputStream
@@ -106,7 +105,7 @@ internal object DirectAdbTransport {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.R) null
         else AdbMdnsDiscoverer.discoverConnectService(timeoutMs, includeLanDevices)
 
-    private suspend fun loadOrCreate(
+    private fun loadOrCreate(
         forceNew: Boolean = false,
     ): Pair<PrivateKey, ByteArray> {
         val privB64 = prefs.getString(ScrcpyPreferenceKeys.NATIVE_ADB_PRIVATE_KEY, null) ?: ""

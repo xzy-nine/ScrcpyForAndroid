@@ -15,7 +15,6 @@ import io.github.miuzarte.scrcpyforandroid.scrcpy.ClientOptions
 import io.github.miuzarte.scrcpyforandroid.scrcpy.Scrcpy
 import io.github.miuzarte.scrcpyforandroid.scrcpy.Shared.AudioSource
 import io.github.miuzarte.scrcpyforandroid.scrcpy.Shared.Codec
-import io.github.miuzarte.scrcpyforandroid.scrcpy.Shared.VideoSource
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob

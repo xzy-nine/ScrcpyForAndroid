@@ -1,12 +1,8 @@
 package io.github.miuzarte.scrcpyforandroid.widgets
 
-import android.annotation.SuppressLint
-import android.graphics.SurfaceTexture
 import android.view.KeyEvent
 import android.view.MotionEvent
 import android.view.Surface
-import android.view.TextureView
-import android.view.View
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
 import androidx.compose.foundation.combinedClickable
@@ -15,14 +11,12 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -66,13 +60,11 @@ import io.github.miuzarte.scrcpyforandroid.constants.UiSpacing
 import io.github.miuzarte.scrcpyforandroid.haptics.rememberAppHaptics
 import io.github.miuzarte.scrcpyforandroid.scaffolds.SuperSlide
 import io.github.miuzarte.scrcpyforandroid.scrcpy.Scrcpy
-import notifyrelay.data.config.ScrcpyDefaults
 import notifyrelay.data.config.ScrcpyPresets
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import top.yukonga.miuix.kmp.basic.Button
 import top.yukonga.miuix.kmp.basic.ButtonDefaults
 import top.yukonga.miuix.kmp.basic.Card

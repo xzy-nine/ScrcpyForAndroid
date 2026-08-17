@@ -42,8 +42,6 @@ import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import io.github.miuzarte.scrcpyforandroid.NativeCoreFacade
 import io.github.miuzarte.scrcpyforandroid.ScrcpySessionInfo
-import io.github.miuzarte.scrcpyforandroid.constants.UiAndroidKeycodes
-import io.github.miuzarte.scrcpyforandroid.constants.UiSpacing
 import io.github.miuzarte.scrcpyforandroid.nativecore.NativeAdbService
 import io.github.miuzarte.scrcpyforandroid.scrcpy.ClientOptions
 import io.github.miuzarte.scrcpyforandroid.scrcpy.Scrcpy
