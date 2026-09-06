@@ -14,7 +14,10 @@ android {
 
         externalNativeBuild {
             cmake {
-                arguments += listOf("-DANDROID_STL=none")
+                arguments += listOf(
+                    "-DANDROID_STL=none",
+                    "-DANDROID_SUPPORT_FLEXIBLE_PAGE_SIZES=ON"
+                )
             }
         }
 
@@ -69,10 +72,10 @@ dependencies {
     implementation(libs.gson)
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.kotlinx.coroutines.android)
-    implementation("io.github.vvb2060.ndk:boringssl:20250114")
+    implementation("io.github.vvb2060.ndk:boringssl:20251124")
     implementation("org.lsposed.libcxx:libcxx:27.0.12077973")
     implementation("org.bouncycastle:bcpkix-jdk18on:1.80")
-    implementation("org.conscrypt:conscrypt-android:2.5.2")
+    implementation("org.conscrypt:conscrypt-android:2.5.3")
 
     testImplementation(libs.junit)
     androidTestImplementation(platform(libs.androidx.compose.bom))
