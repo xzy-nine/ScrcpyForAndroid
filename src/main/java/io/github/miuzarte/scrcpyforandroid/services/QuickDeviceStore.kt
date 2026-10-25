@@ -1,9 +1,8 @@
 package io.github.miuzarte.scrcpyforandroid.services
 
-import android.content.Context
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import notifyrelay.data.StorageManager
+import notifyrelay.data.Storage
 import notifyrelay.data.config.ScrcpyDefaults
 import notifyrelay.data.config.ScrcpyPreferenceKeys
 import notifyrelay.data.model.ConnectionTarget
@@ -19,13 +18,11 @@ internal fun parseQuickTarget(raw: String): ConnectionTarget? {
     return ConnectionTarget(host, port)
 }
 
-internal fun loadOnlineDevicesFromApp(context: Context): List<OnlineDeviceInfo> {
+internal fun loadOnlineDevicesFromApp(): List<OnlineDeviceInfo> {
     return try {
-        val json = StorageManager.getString(
-            context,
-            ScrcpyPreferenceKeys.ONLINE_DEVICES_CACHE,
+        val json = Storage.getString(ScrcpyPreferenceKeys.ONLINE_DEVICES_CACHE,
             "[]",
-            StorageManager.PrefsType.SCRCPY,
+            Storage.PrefsType.SCRCPY,
         )
         val gson = Gson()
         val type = TypeToken.getParameterized(List::class.java, OnlineDeviceInfo::class.java).type

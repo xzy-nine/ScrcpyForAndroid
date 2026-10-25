@@ -145,7 +145,7 @@ class AudioForwardingService : Service() {
             }
             Log.i(TAG, "ADB 连接成功: $host:$port")
 
-            val mainSettings = loadMainSettings(applicationContext)
+            val mainSettings = loadMainSettings()
             val scrcpyInstance = Scrcpy(
                 appContext = applicationContext,
                 serverRemotePath = ScrcpyDefaults.SERVER_REMOTE_PATH,

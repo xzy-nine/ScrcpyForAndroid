@@ -94,7 +94,7 @@ fun DeviceTabScreen(
     val themeBaseIndex = LocalScrcpyThemeBaseIndex.current
     val context = LocalContext.current
     val haptics = rememberAppHaptics()
-    val initialSettings = remember(context) { loadDevicePageSettings(context) }
+    val initialSettings = remember { loadDevicePageSettings() }
     val scope = rememberCoroutineScope()
     val adbWorkerDispatcher = remember {
         Executors.newSingleThreadExecutor { runnable ->
@@ -501,7 +501,6 @@ fun DeviceTabScreen(
         viewModel.cropY,
     ) {
         saveDevicePageSettings(
-            context,
             DevicePageSettings(
                 quickConnectInput = quickConnectInput,
                 audioBitRateKbps = audioBitRateKbps,

@@ -15,8 +15,8 @@ import io.github.miuzarte.scrcpyforandroid.services.saveMainSettings
 
 class ScrcpyUiViewModel private constructor(private val app: Application) : ViewModel() {
 
-    private var mainSettings = loadMainSettings(app)
-    private val deviceSettings = loadDevicePageSettings(app)
+    private var mainSettings = loadMainSettings()
+    private val deviceSettings = loadDevicePageSettings()
 
     private val _audioEnabled = mutableStateOf(mainSettings.audioEnabled)
     var audioEnabled: Boolean
@@ -24,7 +24,7 @@ class ScrcpyUiViewModel private constructor(private val app: Application) : View
         set(value) {
             _audioEnabled.value = value
             mainSettings = mainSettings.copy(audioEnabled = value)
-            saveMainSettings(app, mainSettings)
+            saveMainSettings(mainSettings)
         }
 
     private val _audioCodec = mutableStateOf(mainSettings.audioCodec)
@@ -33,7 +33,7 @@ class ScrcpyUiViewModel private constructor(private val app: Application) : View
         set(value) {
             _audioCodec.value = value
             mainSettings = mainSettings.copy(audioCodec = value)
-            saveMainSettings(app, mainSettings)
+            saveMainSettings(mainSettings)
         }
 
     private val _videoCodec = mutableStateOf(mainSettings.videoCodec)
@@ -42,7 +42,7 @@ class ScrcpyUiViewModel private constructor(private val app: Application) : View
         set(value) {
             _videoCodec.value = value
             mainSettings = mainSettings.copy(videoCodec = value)
-            saveMainSettings(app, mainSettings)
+            saveMainSettings(mainSettings)
         }
 
     private val _fullscreenDebugInfoEnabled = mutableStateOf(mainSettings.fullscreenDebugInfoEnabled)
@@ -51,7 +51,7 @@ class ScrcpyUiViewModel private constructor(private val app: Application) : View
         set(value) {
             _fullscreenDebugInfoEnabled.value = value
             mainSettings = mainSettings.copy(fullscreenDebugInfoEnabled = value)
-            saveMainSettings(app, mainSettings)
+            saveMainSettings(mainSettings)
         }
 
     private val _showFullscreenVirtualButtons = mutableStateOf(mainSettings.showFullscreenVirtualButtons)
@@ -60,7 +60,7 @@ class ScrcpyUiViewModel private constructor(private val app: Application) : View
         set(value) {
             _showFullscreenVirtualButtons.value = value
             mainSettings = mainSettings.copy(showFullscreenVirtualButtons = value)
-            saveMainSettings(app, mainSettings)
+            saveMainSettings(mainSettings)
         }
 
     private val _keepScreenOnWhenStreamingEnabled = mutableStateOf(mainSettings.keepScreenOnWhenStreamingEnabled)
@@ -69,7 +69,7 @@ class ScrcpyUiViewModel private constructor(private val app: Application) : View
         set(value) {
             _keepScreenOnWhenStreamingEnabled.value = value
             mainSettings = mainSettings.copy(keepScreenOnWhenStreamingEnabled = value)
-            saveMainSettings(app, mainSettings)
+            saveMainSettings(mainSettings)
         }
 
     private val _lowLatency = mutableStateOf(mainSettings.lowLatency)
@@ -78,7 +78,7 @@ class ScrcpyUiViewModel private constructor(private val app: Application) : View
         set(value) {
             _lowLatency.value = value
             mainSettings = mainSettings.copy(lowLatency = value)
-            saveMainSettings(app, mainSettings)
+            saveMainSettings(mainSettings)
         }
 
     private val _virtualButtonsLayout = mutableStateOf(mainSettings.virtualButtonsLayout)
@@ -87,7 +87,7 @@ class ScrcpyUiViewModel private constructor(private val app: Application) : View
         set(value) {
             _virtualButtonsLayout.value = value
             mainSettings = mainSettings.copy(virtualButtonsLayout = value)
-            saveMainSettings(app, mainSettings)
+            saveMainSettings(mainSettings)
         }
 
     private val _customServerUri = mutableStateOf(mainSettings.customServerUri)
@@ -96,7 +96,7 @@ class ScrcpyUiViewModel private constructor(private val app: Application) : View
         set(value) {
             _customServerUri.value = value
             mainSettings = mainSettings.copy(customServerUri = value)
-            saveMainSettings(app, mainSettings)
+            saveMainSettings(mainSettings)
         }
 
     private val _serverRemotePath = mutableStateOf(mainSettings.serverRemotePath)
@@ -105,7 +105,7 @@ class ScrcpyUiViewModel private constructor(private val app: Application) : View
         set(value) {
             _serverRemotePath.value = value
             mainSettings = mainSettings.copy(serverRemotePath = value)
-            saveMainSettings(app, mainSettings)
+            saveMainSettings(mainSettings)
         }
 
     val currentAdbKeyName: String
@@ -117,7 +117,7 @@ class ScrcpyUiViewModel private constructor(private val app: Application) : View
         set(value) {
             _adbPairingAutoDiscoverOnDialogOpen.value = value
             mainSettings = mainSettings.copy(adbPairingAutoDiscoverOnDialogOpen = value)
-            saveMainSettings(app, mainSettings)
+            saveMainSettings(mainSettings)
         }
 
     private val _adbAutoReconnectPairedDevice = mutableStateOf(mainSettings.adbAutoReconnectPairedDevice)
@@ -126,7 +126,7 @@ class ScrcpyUiViewModel private constructor(private val app: Application) : View
         set(value) {
             _adbAutoReconnectPairedDevice.value = value
             mainSettings = mainSettings.copy(adbAutoReconnectPairedDevice = value)
-            saveMainSettings(app, mainSettings)
+            saveMainSettings(mainSettings)
         }
 
     private val _adbMdnsLanDiscoveryEnabled = mutableStateOf(mainSettings.adbMdnsLanDiscoveryEnabled)
@@ -135,7 +135,7 @@ class ScrcpyUiViewModel private constructor(private val app: Application) : View
         set(value) {
             _adbMdnsLanDiscoveryEnabled.value = value
             mainSettings = mainSettings.copy(adbMdnsLanDiscoveryEnabled = value)
-            saveMainSettings(app, mainSettings)
+            saveMainSettings(mainSettings)
         }
 
     private var noControlState by mutableStateOf(deviceSettings.noControl)

@@ -1,7 +1,6 @@
 package io.github.miuzarte.scrcpyforandroid.services
 
-import android.content.Context
-import notifyrelay.data.StorageManager
+import notifyrelay.data.Storage
 import notifyrelay.data.config.ScrcpyDefaults
 import notifyrelay.data.config.ScrcpyPreferenceKeys
 
@@ -63,613 +62,415 @@ internal data class DevicePageSettings(
     val cropY: String = ScrcpyDefaults.CROP_Y,
 )
 
-internal fun loadMainSettings(context: Context): MainSettings {
+internal fun loadMainSettings(): MainSettings {
     return MainSettings(
-        audioEnabled = StorageManager.getBoolean(
-            context,
-            ScrcpyPreferenceKeys.AUDIO_ENABLED,
+        audioEnabled = Storage.getBoolean(ScrcpyPreferenceKeys.AUDIO_ENABLED,
             ScrcpyDefaults.AUDIO_ENABLED,
-            StorageManager.PrefsType.SCRCPY,
+            Storage.PrefsType.SCRCPY,
         ),
-        audioCodec = StorageManager.getString(
-            context,
-            ScrcpyPreferenceKeys.AUDIO_CODEC,
+        audioCodec = Storage.getString(ScrcpyPreferenceKeys.AUDIO_CODEC,
             ScrcpyDefaults.AUDIO_CODEC,
-            StorageManager.PrefsType.SCRCPY,
+            Storage.PrefsType.SCRCPY,
         ).ifBlank { ScrcpyDefaults.AUDIO_CODEC },
-        videoCodec = StorageManager.getString(
-            context,
-            ScrcpyPreferenceKeys.VIDEO_CODEC,
+        videoCodec = Storage.getString(ScrcpyPreferenceKeys.VIDEO_CODEC,
             ScrcpyDefaults.VIDEO_CODEC,
-            StorageManager.PrefsType.SCRCPY,
+            Storage.PrefsType.SCRCPY,
         ).ifBlank { ScrcpyDefaults.VIDEO_CODEC },
-        fullscreenDebugInfoEnabled = StorageManager.getBoolean(
-            context,
-            ScrcpyPreferenceKeys.FULLSCREEN_DEBUG_INFO,
+        fullscreenDebugInfoEnabled = Storage.getBoolean(ScrcpyPreferenceKeys.FULLSCREEN_DEBUG_INFO,
             ScrcpyDefaults.FULLSCREEN_DEBUG_INFO,
-            StorageManager.PrefsType.SCRCPY,
+            Storage.PrefsType.SCRCPY,
         ),
-        showFullscreenVirtualButtons = StorageManager.getBoolean(
-            context,
-            ScrcpyPreferenceKeys.SHOW_FULLSCREEN_VIRTUAL_BUTTONS,
+        showFullscreenVirtualButtons = Storage.getBoolean(ScrcpyPreferenceKeys.SHOW_FULLSCREEN_VIRTUAL_BUTTONS,
             ScrcpyDefaults.SHOW_FULLSCREEN_VIRTUAL_BUTTONS,
-            StorageManager.PrefsType.SCRCPY,
+            Storage.PrefsType.SCRCPY,
         ),
-        keepScreenOnWhenStreamingEnabled = StorageManager.getBoolean(
-            context,
-            ScrcpyPreferenceKeys.KEEP_SCREEN_ON_WHEN_STREAMING,
+        keepScreenOnWhenStreamingEnabled = Storage.getBoolean(ScrcpyPreferenceKeys.KEEP_SCREEN_ON_WHEN_STREAMING,
             ScrcpyDefaults.KEEP_SCREEN_ON_WHEN_STREAMING,
-            StorageManager.PrefsType.SCRCPY,
+            Storage.PrefsType.SCRCPY,
         ),
-        lowLatency = StorageManager.getBoolean(
-            context,
-            ScrcpyPreferenceKeys.LOW_LATENCY,
+        lowLatency = Storage.getBoolean(ScrcpyPreferenceKeys.LOW_LATENCY,
             ScrcpyDefaults.LOW_LATENCY,
-            StorageManager.PrefsType.SCRCPY,
+            Storage.PrefsType.SCRCPY,
         ),
-        virtualButtonsLayout = StorageManager.getString(
-            context,
-            ScrcpyPreferenceKeys.VIRTUAL_BUTTONS_LAYOUT,
+        virtualButtonsLayout = Storage.getString(ScrcpyPreferenceKeys.VIRTUAL_BUTTONS_LAYOUT,
             ScrcpyDefaults.VIRTUAL_BUTTONS_LAYOUT,
-            StorageManager.PrefsType.SCRCPY,
+            Storage.PrefsType.SCRCPY,
         ).ifBlank { ScrcpyDefaults.VIRTUAL_BUTTONS_LAYOUT },
-        customServerUri = StorageManager.getString(
-            context,
-            ScrcpyPreferenceKeys.CUSTOM_SERVER_URI,
+        customServerUri = Storage.getString(ScrcpyPreferenceKeys.CUSTOM_SERVER_URI,
             ScrcpyDefaults.CUSTOM_SERVER_URI,
-            StorageManager.PrefsType.SCRCPY,
+            Storage.PrefsType.SCRCPY,
         ).ifBlank { null },
-        serverRemotePath = StorageManager.getString(
-            context,
-            ScrcpyPreferenceKeys.SERVER_REMOTE_PATH,
+        serverRemotePath = Storage.getString(ScrcpyPreferenceKeys.SERVER_REMOTE_PATH,
             ScrcpyDefaults.SERVER_REMOTE_PATH_INPUT,
-            StorageManager.PrefsType.SCRCPY,
+            Storage.PrefsType.SCRCPY,
         ),
-        adbPairingAutoDiscoverOnDialogOpen = StorageManager.getBoolean(
-            context,
-            ScrcpyPreferenceKeys.ADB_PAIRING_AUTO_DISCOVER_ON_DIALOG_OPEN,
+        adbPairingAutoDiscoverOnDialogOpen = Storage.getBoolean(ScrcpyPreferenceKeys.ADB_PAIRING_AUTO_DISCOVER_ON_DIALOG_OPEN,
             ScrcpyDefaults.ADB_PAIRING_AUTO_DISCOVER_ON_DIALOG_OPEN,
-            StorageManager.PrefsType.SCRCPY,
+            Storage.PrefsType.SCRCPY,
         ),
-        adbAutoReconnectPairedDevice = StorageManager.getBoolean(
-            context,
-            ScrcpyPreferenceKeys.ADB_AUTO_RECONNECT_PAIRED_DEVICE,
+        adbAutoReconnectPairedDevice = Storage.getBoolean(ScrcpyPreferenceKeys.ADB_AUTO_RECONNECT_PAIRED_DEVICE,
             ScrcpyDefaults.ADB_AUTO_RECONNECT_PAIRED_DEVICE,
-            StorageManager.PrefsType.SCRCPY,
+            Storage.PrefsType.SCRCPY,
         ),
-        adbMdnsLanDiscoveryEnabled = StorageManager.getBoolean(
-            context,
-            ScrcpyPreferenceKeys.ADB_MDNS_LAN_DISCOVERY,
+        adbMdnsLanDiscoveryEnabled = Storage.getBoolean(ScrcpyPreferenceKeys.ADB_MDNS_LAN_DISCOVERY,
             ScrcpyDefaults.ADB_MDNS_LAN_DISCOVERY,
-            StorageManager.PrefsType.SCRCPY,
+            Storage.PrefsType.SCRCPY,
         ),
     )
 }
 
-internal fun saveMainSettings(context: Context, settings: MainSettings) {
-    StorageManager.putBoolean(
-        context,
-        ScrcpyPreferenceKeys.AUDIO_ENABLED,
+internal fun saveMainSettings(settings: MainSettings) {
+    Storage.putBoolean(ScrcpyPreferenceKeys.AUDIO_ENABLED,
         settings.audioEnabled,
-        StorageManager.PrefsType.SCRCPY,
+        Storage.PrefsType.SCRCPY,
     )
-    StorageManager.putString(
-        context,
-        ScrcpyPreferenceKeys.AUDIO_CODEC,
+    Storage.putString(ScrcpyPreferenceKeys.AUDIO_CODEC,
         settings.audioCodec,
-        StorageManager.PrefsType.SCRCPY,
+        Storage.PrefsType.SCRCPY,
     )
-    StorageManager.putString(
-        context,
-        ScrcpyPreferenceKeys.VIDEO_CODEC,
+    Storage.putString(ScrcpyPreferenceKeys.VIDEO_CODEC,
         settings.videoCodec,
-        StorageManager.PrefsType.SCRCPY,
+        Storage.PrefsType.SCRCPY,
     )
-    StorageManager.putBoolean(
-        context,
-        ScrcpyPreferenceKeys.FULLSCREEN_DEBUG_INFO,
+    Storage.putBoolean(ScrcpyPreferenceKeys.FULLSCREEN_DEBUG_INFO,
         settings.fullscreenDebugInfoEnabled,
-        StorageManager.PrefsType.SCRCPY,
+        Storage.PrefsType.SCRCPY,
     )
-    StorageManager.putBoolean(
-        context,
-        ScrcpyPreferenceKeys.SHOW_FULLSCREEN_VIRTUAL_BUTTONS,
+    Storage.putBoolean(ScrcpyPreferenceKeys.SHOW_FULLSCREEN_VIRTUAL_BUTTONS,
         settings.showFullscreenVirtualButtons,
-        StorageManager.PrefsType.SCRCPY,
+        Storage.PrefsType.SCRCPY,
     )
-    StorageManager.putBoolean(
-        context,
-        ScrcpyPreferenceKeys.KEEP_SCREEN_ON_WHEN_STREAMING,
+    Storage.putBoolean(ScrcpyPreferenceKeys.KEEP_SCREEN_ON_WHEN_STREAMING,
         settings.keepScreenOnWhenStreamingEnabled,
-        StorageManager.PrefsType.SCRCPY,
+        Storage.PrefsType.SCRCPY,
     )
-    StorageManager.putBoolean(
-        context,
-        ScrcpyPreferenceKeys.LOW_LATENCY,
+    Storage.putBoolean(ScrcpyPreferenceKeys.LOW_LATENCY,
         settings.lowLatency,
-        StorageManager.PrefsType.SCRCPY,
+        Storage.PrefsType.SCRCPY,
     )
-    StorageManager.putString(
-        context,
-        ScrcpyPreferenceKeys.VIRTUAL_BUTTONS_LAYOUT,
+    Storage.putString(ScrcpyPreferenceKeys.VIRTUAL_BUTTONS_LAYOUT,
         settings.virtualButtonsLayout,
-        StorageManager.PrefsType.SCRCPY,
+        Storage.PrefsType.SCRCPY,
     )
-    StorageManager.putString(
-        context,
-        ScrcpyPreferenceKeys.CUSTOM_SERVER_URI,
+    Storage.putString(ScrcpyPreferenceKeys.CUSTOM_SERVER_URI,
         settings.customServerUri ?: "",
-        StorageManager.PrefsType.SCRCPY,
+        Storage.PrefsType.SCRCPY,
     )
-    StorageManager.putString(
-        context,
-        ScrcpyPreferenceKeys.SERVER_REMOTE_PATH,
+    Storage.putString(ScrcpyPreferenceKeys.SERVER_REMOTE_PATH,
         settings.serverRemotePath,
-        StorageManager.PrefsType.SCRCPY,
+        Storage.PrefsType.SCRCPY,
     )
-    StorageManager.putBoolean(
-        context,
-        ScrcpyPreferenceKeys.ADB_PAIRING_AUTO_DISCOVER_ON_DIALOG_OPEN,
+    Storage.putBoolean(ScrcpyPreferenceKeys.ADB_PAIRING_AUTO_DISCOVER_ON_DIALOG_OPEN,
         settings.adbPairingAutoDiscoverOnDialogOpen,
-        StorageManager.PrefsType.SCRCPY,
+        Storage.PrefsType.SCRCPY,
     )
-    StorageManager.putBoolean(
-        context,
-        ScrcpyPreferenceKeys.ADB_AUTO_RECONNECT_PAIRED_DEVICE,
+    Storage.putBoolean(ScrcpyPreferenceKeys.ADB_AUTO_RECONNECT_PAIRED_DEVICE,
         settings.adbAutoReconnectPairedDevice,
-        StorageManager.PrefsType.SCRCPY,
+        Storage.PrefsType.SCRCPY,
     )
-    StorageManager.putBoolean(
-        context,
-        ScrcpyPreferenceKeys.ADB_MDNS_LAN_DISCOVERY,
+    Storage.putBoolean(ScrcpyPreferenceKeys.ADB_MDNS_LAN_DISCOVERY,
         settings.adbMdnsLanDiscoveryEnabled,
-        StorageManager.PrefsType.SCRCPY,
+        Storage.PrefsType.SCRCPY,
     )
 }
 
-internal fun loadDevicePageSettings(context: Context): DevicePageSettings {
-    val audioBitRateKbps = StorageManager.getInt(
-        context,
-        ScrcpyPreferenceKeys.AUDIO_BIT_RATE_KBPS,
+internal fun loadDevicePageSettings(): DevicePageSettings {
+    val audioBitRateKbps = Storage.getInt(ScrcpyPreferenceKeys.AUDIO_BIT_RATE_KBPS,
         ScrcpyDefaults.AUDIO_BIT_RATE_KBPS,
-        StorageManager.PrefsType.SCRCPY,
+        Storage.PrefsType.SCRCPY,
     )
     return DevicePageSettings(
-        quickConnectInput = StorageManager.getString(
-            context,
-            ScrcpyPreferenceKeys.QUICK_CONNECT_INPUT,
+        quickConnectInput = Storage.getString(ScrcpyPreferenceKeys.QUICK_CONNECT_INPUT,
             ScrcpyDefaults.QUICK_CONNECT_INPUT,
-            StorageManager.PrefsType.SCRCPY,
+            Storage.PrefsType.SCRCPY,
         ),
         pairHost = ScrcpyDefaults.PAIR_HOST,
         pairPort = ScrcpyDefaults.PAIR_PORT,
         pairCode = ScrcpyDefaults.PAIR_CODE,
         audioBitRateKbps = audioBitRateKbps,
-        audioBitRateInput = StorageManager.getString(
-            context,
-            ScrcpyPreferenceKeys.AUDIO_BIT_RATE_INPUT,
+        audioBitRateInput = Storage.getString(ScrcpyPreferenceKeys.AUDIO_BIT_RATE_INPUT,
             ScrcpyDefaults.AUDIO_BIT_RATE_INPUT,
-            StorageManager.PrefsType.SCRCPY,
+            Storage.PrefsType.SCRCPY,
         ).ifBlank { audioBitRateKbps.toString() },
-        videoBitRateMbps = StorageManager.getFloat(
-            context,
-            ScrcpyPreferenceKeys.VIDEO_BIT_RATE_MBPS,
+        videoBitRateMbps = Storage.getFloat(ScrcpyPreferenceKeys.VIDEO_BIT_RATE_MBPS,
             ScrcpyDefaults.VIDEO_BIT_RATE_MBPS,
-            StorageManager.PrefsType.SCRCPY,
+            Storage.PrefsType.SCRCPY,
         ),
-        videoBitRateInput = StorageManager.getString(
-            context,
-            ScrcpyPreferenceKeys.VIDEO_BIT_RATE_INPUT,
+        videoBitRateInput = Storage.getString(ScrcpyPreferenceKeys.VIDEO_BIT_RATE_INPUT,
             ScrcpyDefaults.VIDEO_BIT_RATE_INPUT,
-            StorageManager.PrefsType.SCRCPY,
+            Storage.PrefsType.SCRCPY,
         ).ifBlank { ScrcpyDefaults.VIDEO_BIT_RATE_INPUT },
-        turnScreenOff = StorageManager.getBoolean(
-            context,
-            ScrcpyPreferenceKeys.TURN_SCREEN_OFF,
+        turnScreenOff = Storage.getBoolean(ScrcpyPreferenceKeys.TURN_SCREEN_OFF,
             ScrcpyDefaults.TURN_SCREEN_OFF,
-            StorageManager.PrefsType.SCRCPY,
+            Storage.PrefsType.SCRCPY,
         ),
-        noControl = StorageManager.getBoolean(
-            context,
-            ScrcpyPreferenceKeys.NO_CONTROL,
+        noControl = Storage.getBoolean(ScrcpyPreferenceKeys.NO_CONTROL,
             ScrcpyDefaults.NO_CONTROL,
-            StorageManager.PrefsType.SCRCPY,
+            Storage.PrefsType.SCRCPY,
         ),
-        noVideo = StorageManager.getBoolean(
-            context,
-            ScrcpyPreferenceKeys.NO_VIDEO,
+        noVideo = Storage.getBoolean(ScrcpyPreferenceKeys.NO_VIDEO,
             ScrcpyDefaults.NO_VIDEO,
-            StorageManager.PrefsType.SCRCPY,
+            Storage.PrefsType.SCRCPY,
         ),
-        videoSourcePreset = StorageManager.getString(
-            context,
-            ScrcpyPreferenceKeys.VIDEO_SOURCE_PRESET,
+        videoSourcePreset = Storage.getString(ScrcpyPreferenceKeys.VIDEO_SOURCE_PRESET,
             ScrcpyDefaults.VIDEO_SOURCE_PRESET,
-            StorageManager.PrefsType.SCRCPY,
+            Storage.PrefsType.SCRCPY,
         ).ifBlank { ScrcpyDefaults.VIDEO_SOURCE_PRESET },
-        displayIdInput = StorageManager.getString(
-            context,
-            ScrcpyPreferenceKeys.DISPLAY_ID,
+        displayIdInput = Storage.getString(ScrcpyPreferenceKeys.DISPLAY_ID,
             ScrcpyDefaults.DISPLAY_ID,
-            StorageManager.PrefsType.SCRCPY,
+            Storage.PrefsType.SCRCPY,
         ),
-        cameraIdInput = StorageManager.getString(
-            context,
-            ScrcpyPreferenceKeys.CAMERA_ID,
+        cameraIdInput = Storage.getString(ScrcpyPreferenceKeys.CAMERA_ID,
             ScrcpyDefaults.CAMERA_ID,
-            StorageManager.PrefsType.SCRCPY,
+            Storage.PrefsType.SCRCPY,
         ),
-        cameraFacingPreset = StorageManager.getString(
-            context,
-            ScrcpyPreferenceKeys.CAMERA_FACING_PRESET,
+        cameraFacingPreset = Storage.getString(ScrcpyPreferenceKeys.CAMERA_FACING_PRESET,
             ScrcpyDefaults.CAMERA_FACING_PRESET,
-            StorageManager.PrefsType.SCRCPY,
+            Storage.PrefsType.SCRCPY,
         ),
-        cameraSizePreset = StorageManager.getString(
-            context,
-            ScrcpyPreferenceKeys.CAMERA_SIZE_PRESET,
+        cameraSizePreset = Storage.getString(ScrcpyPreferenceKeys.CAMERA_SIZE_PRESET,
             ScrcpyDefaults.CAMERA_SIZE_PRESET,
-            StorageManager.PrefsType.SCRCPY,
+            Storage.PrefsType.SCRCPY,
         ),
-        cameraSizeCustom = StorageManager.getString(
-            context,
-            ScrcpyPreferenceKeys.CAMERA_SIZE_CUSTOM,
+        cameraSizeCustom = Storage.getString(ScrcpyPreferenceKeys.CAMERA_SIZE_CUSTOM,
             ScrcpyDefaults.CAMERA_SIZE_CUSTOM,
-            StorageManager.PrefsType.SCRCPY,
+            Storage.PrefsType.SCRCPY,
         ),
-        cameraAr = StorageManager.getString(
-            context,
-            ScrcpyPreferenceKeys.CAMERA_AR,
+        cameraAr = Storage.getString(ScrcpyPreferenceKeys.CAMERA_AR,
             ScrcpyDefaults.CAMERA_AR,
-            StorageManager.PrefsType.SCRCPY,
+            Storage.PrefsType.SCRCPY,
         ),
-        cameraFps = StorageManager.getString(
-            context,
-            ScrcpyPreferenceKeys.CAMERA_FPS,
+        cameraFps = Storage.getString(ScrcpyPreferenceKeys.CAMERA_FPS,
             ScrcpyDefaults.CAMERA_FPS,
-            StorageManager.PrefsType.SCRCPY,
+            Storage.PrefsType.SCRCPY,
         ),
-        cameraHighSpeed = StorageManager.getBoolean(
-            context,
-            ScrcpyPreferenceKeys.CAMERA_HIGH_SPEED,
+        cameraHighSpeed = Storage.getBoolean(ScrcpyPreferenceKeys.CAMERA_HIGH_SPEED,
             ScrcpyDefaults.CAMERA_HIGH_SPEED,
-            StorageManager.PrefsType.SCRCPY,
+            Storage.PrefsType.SCRCPY,
         ),
-        audioSourcePreset = StorageManager.getString(
-            context,
-            ScrcpyPreferenceKeys.AUDIO_SOURCE_PRESET,
+        audioSourcePreset = Storage.getString(ScrcpyPreferenceKeys.AUDIO_SOURCE_PRESET,
             ScrcpyDefaults.AUDIO_SOURCE_PRESET,
-            StorageManager.PrefsType.SCRCPY,
+            Storage.PrefsType.SCRCPY,
         ).ifBlank { ScrcpyDefaults.AUDIO_SOURCE_PRESET },
-        audioSourceCustom = StorageManager.getString(
-            context,
-            ScrcpyPreferenceKeys.AUDIO_SOURCE_CUSTOM,
+        audioSourceCustom = Storage.getString(ScrcpyPreferenceKeys.AUDIO_SOURCE_CUSTOM,
             ScrcpyDefaults.AUDIO_SOURCE_CUSTOM,
-            StorageManager.PrefsType.SCRCPY,
+            Storage.PrefsType.SCRCPY,
         ),
-        audioDup = StorageManager.getBoolean(
-            context,
-            ScrcpyPreferenceKeys.AUDIO_DUP,
+        audioDup = Storage.getBoolean(ScrcpyPreferenceKeys.AUDIO_DUP,
             ScrcpyDefaults.AUDIO_DUP,
-            StorageManager.PrefsType.SCRCPY,
+            Storage.PrefsType.SCRCPY,
         ),
-        noAudioPlayback = StorageManager.getBoolean(
-            context,
-            ScrcpyPreferenceKeys.NO_AUDIO_PLAYBACK,
+        noAudioPlayback = Storage.getBoolean(ScrcpyPreferenceKeys.NO_AUDIO_PLAYBACK,
             ScrcpyDefaults.NO_AUDIO_PLAYBACK,
-            StorageManager.PrefsType.SCRCPY,
+            Storage.PrefsType.SCRCPY,
         ),
-        requireAudio = StorageManager.getBoolean(
-            context,
-            ScrcpyPreferenceKeys.REQUIRE_AUDIO,
+        requireAudio = Storage.getBoolean(ScrcpyPreferenceKeys.REQUIRE_AUDIO,
             ScrcpyDefaults.REQUIRE_AUDIO,
-            StorageManager.PrefsType.SCRCPY,
+            Storage.PrefsType.SCRCPY,
         ),
-        maxSizeInput = StorageManager.getString(
-            context,
-            ScrcpyPreferenceKeys.MAX_SIZE_INPUT,
+        maxSizeInput = Storage.getString(ScrcpyPreferenceKeys.MAX_SIZE_INPUT,
             ScrcpyDefaults.MAX_SIZE_INPUT,
-            StorageManager.PrefsType.SCRCPY,
+            Storage.PrefsType.SCRCPY,
         ),
-        maxFpsInput = StorageManager.getString(
-            context,
-            ScrcpyPreferenceKeys.MAX_FPS_INPUT,
+        maxFpsInput = Storage.getString(ScrcpyPreferenceKeys.MAX_FPS_INPUT,
             ScrcpyDefaults.MAX_FPS_INPUT,
-            StorageManager.PrefsType.SCRCPY,
+            Storage.PrefsType.SCRCPY,
         ),
-        videoEncoder = StorageManager.getString(
-            context,
-            ScrcpyPreferenceKeys.VIDEO_ENCODER,
+        videoEncoder = Storage.getString(ScrcpyPreferenceKeys.VIDEO_ENCODER,
             ScrcpyDefaults.VIDEO_ENCODER,
-            StorageManager.PrefsType.SCRCPY,
+            Storage.PrefsType.SCRCPY,
         ),
-        videoCodecOptions = StorageManager.getString(
-            context,
-            ScrcpyPreferenceKeys.VIDEO_CODEC_OPTION,
+        videoCodecOptions = Storage.getString(ScrcpyPreferenceKeys.VIDEO_CODEC_OPTION,
             ScrcpyDefaults.VIDEO_CODEC_OPTION,
-            StorageManager.PrefsType.SCRCPY,
+            Storage.PrefsType.SCRCPY,
         ),
-        audioEncoder = StorageManager.getString(
-            context,
-            ScrcpyPreferenceKeys.AUDIO_ENCODER,
+        audioEncoder = Storage.getString(ScrcpyPreferenceKeys.AUDIO_ENCODER,
             ScrcpyDefaults.AUDIO_ENCODER,
-            StorageManager.PrefsType.SCRCPY,
+            Storage.PrefsType.SCRCPY,
         ),
-        audioCodecOptions = StorageManager.getString(
-            context,
-            ScrcpyPreferenceKeys.AUDIO_CODEC_OPTION,
+        audioCodecOptions = Storage.getString(ScrcpyPreferenceKeys.AUDIO_CODEC_OPTION,
             ScrcpyDefaults.AUDIO_CODEC_OPTION,
-            StorageManager.PrefsType.SCRCPY,
+            Storage.PrefsType.SCRCPY,
         ),
-        newDisplayWidth = StorageManager.getString(
-            context,
-            ScrcpyPreferenceKeys.NEW_DISPLAY_WIDTH,
+        newDisplayWidth = Storage.getString(ScrcpyPreferenceKeys.NEW_DISPLAY_WIDTH,
             ScrcpyDefaults.NEW_DISPLAY_WIDTH,
-            StorageManager.PrefsType.SCRCPY,
+            Storage.PrefsType.SCRCPY,
         ),
-        newDisplayHeight = StorageManager.getString(
-            context,
-            ScrcpyPreferenceKeys.NEW_DISPLAY_HEIGHT,
+        newDisplayHeight = Storage.getString(ScrcpyPreferenceKeys.NEW_DISPLAY_HEIGHT,
             ScrcpyDefaults.NEW_DISPLAY_HEIGHT,
-            StorageManager.PrefsType.SCRCPY,
+            Storage.PrefsType.SCRCPY,
         ),
-        newDisplayDpi = StorageManager.getString(
-            context,
-            ScrcpyPreferenceKeys.NEW_DISPLAY_DPI,
+        newDisplayDpi = Storage.getString(ScrcpyPreferenceKeys.NEW_DISPLAY_DPI,
             ScrcpyDefaults.NEW_DISPLAY_DPI,
-            StorageManager.PrefsType.SCRCPY,
+            Storage.PrefsType.SCRCPY,
         ),
-        cropWidth = StorageManager.getString(
-            context,
-            ScrcpyPreferenceKeys.CROP_WIDTH,
+        cropWidth = Storage.getString(ScrcpyPreferenceKeys.CROP_WIDTH,
             ScrcpyDefaults.CROP_WIDTH,
-            StorageManager.PrefsType.SCRCPY,
+            Storage.PrefsType.SCRCPY,
         ),
-        cropHeight = StorageManager.getString(
-            context,
-            ScrcpyPreferenceKeys.CROP_HEIGHT,
+        cropHeight = Storage.getString(ScrcpyPreferenceKeys.CROP_HEIGHT,
             ScrcpyDefaults.CROP_HEIGHT,
-            StorageManager.PrefsType.SCRCPY,
+            Storage.PrefsType.SCRCPY,
         ),
-        cropX = StorageManager.getString(
-            context,
-            ScrcpyPreferenceKeys.CROP_X,
+        cropX = Storage.getString(ScrcpyPreferenceKeys.CROP_X,
             ScrcpyDefaults.CROP_X,
-            StorageManager.PrefsType.SCRCPY,
+            Storage.PrefsType.SCRCPY,
         ),
-        cropY = StorageManager.getString(
-            context,
-            ScrcpyPreferenceKeys.CROP_Y,
+        cropY = Storage.getString(ScrcpyPreferenceKeys.CROP_Y,
             ScrcpyDefaults.CROP_Y,
-            StorageManager.PrefsType.SCRCPY,
+            Storage.PrefsType.SCRCPY,
         ),
     )
 }
 
-internal fun saveDevicePageSettings(context: Context, settings: DevicePageSettings) {
-    StorageManager.remove(
-        context,
-        ScrcpyPreferenceKeys.PAIR_HOST,
-        StorageManager.PrefsType.SCRCPY,
+internal fun saveDevicePageSettings(settings: DevicePageSettings) {
+    Storage.remove(ScrcpyPreferenceKeys.PAIR_HOST,
+        Storage.PrefsType.SCRCPY,
     )
-    StorageManager.remove(
-        context,
-        ScrcpyPreferenceKeys.PAIR_PORT,
-        StorageManager.PrefsType.SCRCPY,
+    Storage.remove(ScrcpyPreferenceKeys.PAIR_PORT,
+        Storage.PrefsType.SCRCPY,
     )
-    StorageManager.remove(
-        context,
-        ScrcpyPreferenceKeys.PAIR_CODE,
-        StorageManager.PrefsType.SCRCPY,
+    Storage.remove(ScrcpyPreferenceKeys.PAIR_CODE,
+        Storage.PrefsType.SCRCPY,
     )
-    StorageManager.putString(
-        context,
-        ScrcpyPreferenceKeys.QUICK_CONNECT_INPUT,
+    Storage.putString(ScrcpyPreferenceKeys.QUICK_CONNECT_INPUT,
         settings.quickConnectInput,
-        StorageManager.PrefsType.SCRCPY,
+        Storage.PrefsType.SCRCPY,
     )
-    StorageManager.putInt(
-        context,
-        ScrcpyPreferenceKeys.AUDIO_BIT_RATE_KBPS,
+    Storage.putInt(ScrcpyPreferenceKeys.AUDIO_BIT_RATE_KBPS,
         settings.audioBitRateKbps,
-        StorageManager.PrefsType.SCRCPY,
+        Storage.PrefsType.SCRCPY,
     )
-    StorageManager.putString(
-        context,
-        ScrcpyPreferenceKeys.AUDIO_BIT_RATE_INPUT,
+    Storage.putString(ScrcpyPreferenceKeys.AUDIO_BIT_RATE_INPUT,
         settings.audioBitRateInput,
-        StorageManager.PrefsType.SCRCPY,
+        Storage.PrefsType.SCRCPY,
     )
-    StorageManager.putFloat(
-        context,
-        ScrcpyPreferenceKeys.VIDEO_BIT_RATE_MBPS,
+    Storage.putFloat(ScrcpyPreferenceKeys.VIDEO_BIT_RATE_MBPS,
         settings.videoBitRateMbps,
-        StorageManager.PrefsType.SCRCPY,
+        Storage.PrefsType.SCRCPY,
     )
-    StorageManager.putString(
-        context,
-        ScrcpyPreferenceKeys.VIDEO_BIT_RATE_INPUT,
+    Storage.putString(ScrcpyPreferenceKeys.VIDEO_BIT_RATE_INPUT,
         settings.videoBitRateInput,
-        StorageManager.PrefsType.SCRCPY,
+        Storage.PrefsType.SCRCPY,
     )
-    StorageManager.putBoolean(
-        context,
-        ScrcpyPreferenceKeys.TURN_SCREEN_OFF,
+    Storage.putBoolean(ScrcpyPreferenceKeys.TURN_SCREEN_OFF,
         settings.turnScreenOff,
-        StorageManager.PrefsType.SCRCPY,
+        Storage.PrefsType.SCRCPY,
     )
-    StorageManager.putBoolean(
-        context,
-        ScrcpyPreferenceKeys.NO_CONTROL,
+    Storage.putBoolean(ScrcpyPreferenceKeys.NO_CONTROL,
         settings.noControl,
-        StorageManager.PrefsType.SCRCPY,
+        Storage.PrefsType.SCRCPY,
     )
-    StorageManager.putBoolean(
-        context,
-        ScrcpyPreferenceKeys.NO_VIDEO,
+    Storage.putBoolean(ScrcpyPreferenceKeys.NO_VIDEO,
         settings.noVideo,
-        StorageManager.PrefsType.SCRCPY,
+        Storage.PrefsType.SCRCPY,
     )
-    StorageManager.putString(
-        context,
-        ScrcpyPreferenceKeys.VIDEO_SOURCE_PRESET,
+    Storage.putString(ScrcpyPreferenceKeys.VIDEO_SOURCE_PRESET,
         settings.videoSourcePreset,
-        StorageManager.PrefsType.SCRCPY,
+        Storage.PrefsType.SCRCPY,
     )
-    StorageManager.putString(
-        context,
-        ScrcpyPreferenceKeys.DISPLAY_ID,
+    Storage.putString(ScrcpyPreferenceKeys.DISPLAY_ID,
         settings.displayIdInput,
-        StorageManager.PrefsType.SCRCPY,
+        Storage.PrefsType.SCRCPY,
     )
-    StorageManager.putString(
-        context,
-        ScrcpyPreferenceKeys.CAMERA_ID,
+    Storage.putString(ScrcpyPreferenceKeys.CAMERA_ID,
         settings.cameraIdInput,
-        StorageManager.PrefsType.SCRCPY,
+        Storage.PrefsType.SCRCPY,
     )
-    StorageManager.putString(
-        context,
-        ScrcpyPreferenceKeys.CAMERA_FACING_PRESET,
+    Storage.putString(ScrcpyPreferenceKeys.CAMERA_FACING_PRESET,
         settings.cameraFacingPreset,
-        StorageManager.PrefsType.SCRCPY,
+        Storage.PrefsType.SCRCPY,
     )
-    StorageManager.putString(
-        context,
-        ScrcpyPreferenceKeys.CAMERA_SIZE_PRESET,
+    Storage.putString(ScrcpyPreferenceKeys.CAMERA_SIZE_PRESET,
         settings.cameraSizePreset,
-        StorageManager.PrefsType.SCRCPY,
+        Storage.PrefsType.SCRCPY,
     )
-    StorageManager.putString(
-        context,
-        ScrcpyPreferenceKeys.CAMERA_SIZE_CUSTOM,
+    Storage.putString(ScrcpyPreferenceKeys.CAMERA_SIZE_CUSTOM,
         settings.cameraSizeCustom,
-        StorageManager.PrefsType.SCRCPY,
+        Storage.PrefsType.SCRCPY,
     )
-    StorageManager.putString(
-        context,
-        ScrcpyPreferenceKeys.CAMERA_AR,
+    Storage.putString(ScrcpyPreferenceKeys.CAMERA_AR,
         settings.cameraAr,
-        StorageManager.PrefsType.SCRCPY,
+        Storage.PrefsType.SCRCPY,
     )
-    StorageManager.putString(
-        context,
-        ScrcpyPreferenceKeys.CAMERA_FPS,
+    Storage.putString(ScrcpyPreferenceKeys.CAMERA_FPS,
         settings.cameraFps,
-        StorageManager.PrefsType.SCRCPY,
+        Storage.PrefsType.SCRCPY,
     )
-    StorageManager.putBoolean(
-        context,
-        ScrcpyPreferenceKeys.CAMERA_HIGH_SPEED,
+    Storage.putBoolean(ScrcpyPreferenceKeys.CAMERA_HIGH_SPEED,
         settings.cameraHighSpeed,
-        StorageManager.PrefsType.SCRCPY,
+        Storage.PrefsType.SCRCPY,
     )
-    StorageManager.putString(
-        context,
-        ScrcpyPreferenceKeys.AUDIO_SOURCE_PRESET,
+    Storage.putString(ScrcpyPreferenceKeys.AUDIO_SOURCE_PRESET,
         settings.audioSourcePreset,
-        StorageManager.PrefsType.SCRCPY,
+        Storage.PrefsType.SCRCPY,
     )
-    StorageManager.putString(
-        context,
-        ScrcpyPreferenceKeys.AUDIO_SOURCE_CUSTOM,
+    Storage.putString(ScrcpyPreferenceKeys.AUDIO_SOURCE_CUSTOM,
         settings.audioSourceCustom,
-        StorageManager.PrefsType.SCRCPY,
+        Storage.PrefsType.SCRCPY,
     )
-    StorageManager.putBoolean(
-        context,
-        ScrcpyPreferenceKeys.AUDIO_DUP,
+    Storage.putBoolean(ScrcpyPreferenceKeys.AUDIO_DUP,
         settings.audioDup,
-        StorageManager.PrefsType.SCRCPY,
+        Storage.PrefsType.SCRCPY,
     )
-    StorageManager.putBoolean(
-        context,
-        ScrcpyPreferenceKeys.NO_AUDIO_PLAYBACK,
+    Storage.putBoolean(ScrcpyPreferenceKeys.NO_AUDIO_PLAYBACK,
         settings.noAudioPlayback,
-        StorageManager.PrefsType.SCRCPY,
+        Storage.PrefsType.SCRCPY,
     )
-    StorageManager.putBoolean(
-        context,
-        ScrcpyPreferenceKeys.REQUIRE_AUDIO,
+    Storage.putBoolean(ScrcpyPreferenceKeys.REQUIRE_AUDIO,
         settings.requireAudio,
-        StorageManager.PrefsType.SCRCPY,
+        Storage.PrefsType.SCRCPY,
     )
-    StorageManager.putString(
-        context,
-        ScrcpyPreferenceKeys.MAX_SIZE_INPUT,
+    Storage.putString(ScrcpyPreferenceKeys.MAX_SIZE_INPUT,
         settings.maxSizeInput,
-        StorageManager.PrefsType.SCRCPY,
+        Storage.PrefsType.SCRCPY,
     )
-    StorageManager.putString(
-        context,
-        ScrcpyPreferenceKeys.MAX_FPS_INPUT,
+    Storage.putString(ScrcpyPreferenceKeys.MAX_FPS_INPUT,
         settings.maxFpsInput,
-        StorageManager.PrefsType.SCRCPY,
+        Storage.PrefsType.SCRCPY,
     )
-    StorageManager.putString(
-        context,
-        ScrcpyPreferenceKeys.VIDEO_ENCODER,
+    Storage.putString(ScrcpyPreferenceKeys.VIDEO_ENCODER,
         settings.videoEncoder,
-        StorageManager.PrefsType.SCRCPY,
+        Storage.PrefsType.SCRCPY,
     )
-    StorageManager.putString(
-        context,
-        ScrcpyPreferenceKeys.VIDEO_CODEC_OPTION,
+    Storage.putString(ScrcpyPreferenceKeys.VIDEO_CODEC_OPTION,
         settings.videoCodecOptions,
-        StorageManager.PrefsType.SCRCPY,
+        Storage.PrefsType.SCRCPY,
     )
-    StorageManager.putString(
-        context,
-        ScrcpyPreferenceKeys.AUDIO_ENCODER,
+    Storage.putString(ScrcpyPreferenceKeys.AUDIO_ENCODER,
         settings.audioEncoder,
-        StorageManager.PrefsType.SCRCPY,
+        Storage.PrefsType.SCRCPY,
     )
-    StorageManager.putString(
-        context,
-        ScrcpyPreferenceKeys.AUDIO_CODEC_OPTION,
+    Storage.putString(ScrcpyPreferenceKeys.AUDIO_CODEC_OPTION,
         settings.audioCodecOptions,
-        StorageManager.PrefsType.SCRCPY,
+        Storage.PrefsType.SCRCPY,
     )
-    StorageManager.putString(
-        context,
-        ScrcpyPreferenceKeys.NEW_DISPLAY_WIDTH,
+    Storage.putString(ScrcpyPreferenceKeys.NEW_DISPLAY_WIDTH,
         settings.newDisplayWidth,
-        StorageManager.PrefsType.SCRCPY,
+        Storage.PrefsType.SCRCPY,
     )
-    StorageManager.putString(
-        context,
-        ScrcpyPreferenceKeys.NEW_DISPLAY_HEIGHT,
+    Storage.putString(ScrcpyPreferenceKeys.NEW_DISPLAY_HEIGHT,
         settings.newDisplayHeight,
-        StorageManager.PrefsType.SCRCPY,
+        Storage.PrefsType.SCRCPY,
     )
-    StorageManager.putString(
-        context,
-        ScrcpyPreferenceKeys.NEW_DISPLAY_DPI,
+    Storage.putString(ScrcpyPreferenceKeys.NEW_DISPLAY_DPI,
         settings.newDisplayDpi,
-        StorageManager.PrefsType.SCRCPY,
+        Storage.PrefsType.SCRCPY,
     )
-    StorageManager.putString(
-        context,
-        ScrcpyPreferenceKeys.CROP_WIDTH,
+    Storage.putString(ScrcpyPreferenceKeys.CROP_WIDTH,
         settings.cropWidth,
-        StorageManager.PrefsType.SCRCPY,
+        Storage.PrefsType.SCRCPY,
     )
-    StorageManager.putString(
-        context,
-        ScrcpyPreferenceKeys.CROP_HEIGHT,
+    Storage.putString(ScrcpyPreferenceKeys.CROP_HEIGHT,
         settings.cropHeight,
-        StorageManager.PrefsType.SCRCPY,
+        Storage.PrefsType.SCRCPY,
     )
-    StorageManager.putString(
-        context,
-        ScrcpyPreferenceKeys.CROP_X,
+    Storage.putString(ScrcpyPreferenceKeys.CROP_X,
         settings.cropX,
-        StorageManager.PrefsType.SCRCPY,
+        Storage.PrefsType.SCRCPY,
     )
-    StorageManager.putString(
-        context,
-        ScrcpyPreferenceKeys.CROP_Y,
+    Storage.putString(ScrcpyPreferenceKeys.CROP_Y,
         settings.cropY,
-        StorageManager.PrefsType.SCRCPY,
+        Storage.PrefsType.SCRCPY,
     )
 }

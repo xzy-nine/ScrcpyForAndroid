@@ -269,8 +269,8 @@ class ShortcutLaunchActivity : ComponentActivity() {
 
         val hasExtendedParams = intent?.hasExtra(EXTRA_VIDEO_BIT_RATE_MBPS) == true
 
-        val persistedSettings = loadDevicePageSettings(this)
-        val mainSettings = loadMainSettings(this)
+        val persistedSettings = loadDevicePageSettings()
+        val mainSettings = loadMainSettings()
 
         val videoBitRateMbps = if (hasExtendedParams) {
             intent?.getFloatExtra(EXTRA_VIDEO_BIT_RATE_MBPS, ScrcpyDefaults.VIDEO_BIT_RATE_MBPS) ?: ScrcpyDefaults.VIDEO_BIT_RATE_MBPS
@@ -489,7 +489,7 @@ private fun ShortcutLaunchScreen(
     val context = LocalContext.current
     val configuration = LocalConfiguration.current
     val view = LocalView.current
-    val settings = remember(context) { loadMainSettings(context) }
+    val settings = remember { loadMainSettings() }
     val scope = rememberCoroutineScope()
     val inputDispatcher = remember<CoroutineDispatcher> {
         val executor = Executors.newSingleThreadExecutor()
@@ -720,7 +720,7 @@ private fun ShortcutLaunchScreen(
             emptySet()
         }
 
-        val mainSettings = loadMainSettings(context)
+        val mainSettings = loadMainSettings()
         val instance = Scrcpy(
             appContext = context.applicationContext,
             serverRemotePath = sessionParams.serverRemotePath.trim(),

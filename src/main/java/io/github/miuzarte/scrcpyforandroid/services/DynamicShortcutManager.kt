@@ -15,7 +15,7 @@ object DynamicShortcutManager {
         val shortcutManager = context.getSystemService(android.content.pm.ShortcutManager::class.java)
             ?: return
 
-        val onlineDevices = loadOnlineDevicesFromApp(context)
+        val onlineDevices = loadOnlineDevicesFromApp()
             .filter { it.deviceType?.lowercase() != "pc" }
             .take(MAX_SHORTCUTS)
 
