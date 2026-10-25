@@ -64,7 +64,6 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 import java.util.concurrent.Executors
-import notifyrelay.base.util.Logger
 import notifyrelay.data.config.ScrcpyDefaults
 import top.yukonga.miuix.kmp.basic.Scaffold
 import top.yukonga.miuix.kmp.basic.Text
@@ -700,7 +699,7 @@ private fun ShortcutLaunchScreen(
         val effectiveAudioDup = if (isVirtualDisplayMode) false else sessionParams.audioDup
         val shouldUseScrcpyStartApp = sessionParams.useScrcpyStartApp && sessionParams.startApp.isNotBlank()
 
-        Logger.d("ShortcutLaunchActivity", "startApp=${sessionParams.startApp}, newDisplay=$effectiveNewDisplay")
+        Log.d("ShortcutLaunchActivity", "startApp=${sessionParams.startApp}, newDisplay=$effectiveNewDisplay")
 
         val existingDisplayIds = if (!shouldUseScrcpyStartApp
             && sessionParams.startApp.isNotBlank()
@@ -710,10 +709,10 @@ private fun ShortcutLaunchScreen(
                 val output = NativeAdbService.shell("dumpsys display")
                 val regex = Regex("mDisplayId=(\\d+)")
                 regex.findAll(output).map { it.groupValues[1].toInt() }.toSet().also {
-                    Logger.d("ShortcutLaunchActivity", "创建前显示器列表: $it")
+                    Log.d("ShortcutLaunchActivity", "创建前显示器列表: $it")
                 }
             } catch (e: Exception) {
-                Logger.e("ShortcutLaunchActivity", "获取创建前显示器列表失败", e)
+                Log.e("ShortcutLaunchActivity", "获取创建前显示器列表失败", e)
                 emptySet()
             }
         } else {
@@ -777,20 +776,20 @@ private fun ShortcutLaunchScreen(
 
         if (shouldUseScrcpyStartApp) {
             if (!options.control) {
-                Logger.w("ShortcutLaunchActivity", "控制通道不可用，无法通过 scrcpy 启动应用")
+                Log.w("ShortcutLaunchActivity", "控制通道不可用，无法通过 scrcpy 启动应用")
             } else {
                 scope.launch(Dispatchers.IO) {
                     runCatching { instance.startApp(sessionParams.startApp) }
                         .onSuccess {
-                            Logger.d("ShortcutLaunchActivity", "已通过 scrcpy 启动应用: ${sessionParams.startApp}")
+                            Log.d("ShortcutLaunchActivity", "已通过 scrcpy 启动应用: ${sessionParams.startApp}")
                         }
                         .onFailure { error ->
-                            Logger.w("ShortcutLaunchActivity", "scrcpy 启动应用失败: ${error.message}", error)
+                            Log.w("ShortcutLaunchActivity", "scrcpy 启动应用失败: ${error.message}", error)
                         }
                 }
             }
         } else if (sessionParams.startApp.isNotBlank() && effectiveNewDisplay.isNotBlank()) {
-            Logger.d("ShortcutLaunchActivity", "准备在虚拟显示器上启动应用: startApp=${sessionParams.startApp}")
+            Log.d("ShortcutLaunchActivity", "准备在虚拟显示器上启动应用: startApp=${sessionParams.startApp}")
             
             scope.launch(Dispatchers.IO) {
                 var newDisplayId: Int? = null
@@ -809,21 +808,21 @@ private fun ShortcutLaunchScreen(
                         val addedDisplays = currentDisplayIds - existingDisplayIds
                         newDisplayId = addedDisplays.firstOrNull()
                         
-                        Logger.d("ShortcutLaunchActivity", "重试 $retryCount/$maxRetries: 当前显示器: $currentDisplayIds, 新增显示器: $addedDisplays")
+                        Log.d("ShortcutLaunchActivity", "重试 $retryCount/$maxRetries: 当前显示器: $currentDisplayIds, 新增显示器: $addedDisplays")
                     } catch (e: Exception) {
-                        Logger.e("ShortcutLaunchActivity", "获取显示器 ID 失败", e)
+                        Log.e("ShortcutLaunchActivity", "获取显示器 ID 失败", e)
                     }
                 }
                 
                 if (newDisplayId != null) {
                     ShortcutLaunchActivity.appLaunchCallback?.invoke(deviceIp, sessionParams.startApp, newDisplayId)
-                    Logger.d("ShortcutLaunchActivity", "已发送启动目标应用请求: displayId=$newDisplayId")
+                    Log.d("ShortcutLaunchActivity", "已发送启动目标应用请求: displayId=$newDisplayId")
                 } else {
-                    Logger.w("ShortcutLaunchActivity", "未找到新增的虚拟显示器 ID，已重试 $maxRetries 次")
+                    Log.w("ShortcutLaunchActivity", "未找到新增的虚拟显示器 ID，已重试 $maxRetries 次")
                 }
             }
         } else {
-            Logger.d("ShortcutLaunchActivity", "跳过应用启动: startApp=${sessionParams.startApp}, newDisplay=$effectiveNewDisplay")
+            Log.d("ShortcutLaunchActivity", "跳过应用启动: startApp=${sessionParams.startApp}, newDisplay=$effectiveNewDisplay")
         }
     }
 
