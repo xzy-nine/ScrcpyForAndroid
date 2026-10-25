@@ -410,7 +410,7 @@ class ShortcutLaunchActivity : ComponentActivity() {
         isInPictureInPictureMode: Boolean,
         newConfig: Configuration
     ) {
-        newConfig?.let { super.onPictureInPictureModeChanged(isInPictureInPictureMode, it) }
+        super.onPictureInPictureModeChanged(isInPictureInPictureMode, newConfig)
         pipModeState.value = isInPictureInPictureMode
     }
 
